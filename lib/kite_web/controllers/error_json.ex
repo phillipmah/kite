@@ -1,4 +1,4 @@
-defmodule PhoenixStarterWeb.ErrorJSON do
+defmodule KiteWeb.ErrorJSON do
   @moduledoc """
   This module is invoked by your endpoint in case of errors on JSON requests.
 

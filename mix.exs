@@ -1,9 +1,9 @@
-defmodule PhoenixStarter.MixProject do
+defmodule Kite.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :phoenix_starter,
+      app: :kite,
       version: "0.1.0",
       elixir: "~> 1.15",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -20,7 +20,7 @@ defmodule PhoenixStarter.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {PhoenixStarter.Application, []},
+      mod: {Kite.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -80,10 +80,10 @@ defmodule PhoenixStarter.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["compile", "tailwind phoenix_starter", "esbuild phoenix_starter"],
+      "assets.build": ["compile", "tailwind kite", "esbuild kite"],
       "assets.deploy": [
-        "tailwind phoenix_starter --minify",
-        "esbuild phoenix_starter --minify",
+        "tailwind kite --minify",
+        "esbuild kite --minify",
         "phx.digest"
       ],
       precommit: ["compile --warnings-as-errors", "deps.unlock --unused", "format", "test"]

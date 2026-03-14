@@ -1,5 +1,5 @@
-defmodule PhoenixStarterWeb.PageControllerTest do
-  use PhoenixStarterWeb.ConnCase
+defmodule KiteWeb.PageControllerTest do
+  use KiteWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")

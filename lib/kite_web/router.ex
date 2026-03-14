@@ -1,11 +1,11 @@
-defmodule PhoenixStarterWeb.Router do
-  use PhoenixStarterWeb, :router
+defmodule KiteWeb.Router do
+  use KiteWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, html: {PhoenixStarterWeb.Layouts, :root}
+    plug :put_root_layout, html: {KiteWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -14,19 +14,19 @@ defmodule PhoenixStarterWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", PhoenixStarterWeb do
+  scope "/", KiteWeb do
     pipe_through :browser
 
     get "/", PageController, :home
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", PhoenixStarterWeb do
+  # scope "/api", KiteWeb do
   #   pipe_through :api
   # end
 
   # Enable LiveDashboard in development
-  if Application.compile_env(:phoenix_starter, :dev_routes) do
+  if Application.compile_env(:kite, :dev_routes) do
     # If you want to use the LiveDashboard in production, you should put
     # it behind authentication and allow only admins to access it.
     # If your application does not have an admins-only section yet,
@@ -37,7 +37,7 @@ defmodule PhoenixStarterWeb.Router do
     scope "/dev" do
       pipe_through :browser
 
-      live_dashboard "/dashboard", metrics: PhoenixStarterWeb.Telemetry
+      live_dashboard "/dashboard", metrics: KiteWeb.Telemetry
     end
   end
 end

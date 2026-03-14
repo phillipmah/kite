@@ -1,4 +1,4 @@
-defmodule PhoenixStarter.Application do
+defmodule Kite.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -8,19 +8,19 @@ defmodule PhoenixStarter.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      PhoenixStarterWeb.Telemetry,
-      PhoenixStarter.Repo,
-      {DNSCluster, query: Application.get_env(:phoenix_starter, :dns_cluster_query) || :ignore},
-      {Phoenix.PubSub, name: PhoenixStarter.PubSub},
-      # Start a worker by calling: PhoenixStarter.Worker.start_link(arg)
-      # {PhoenixStarter.Worker, arg},
+      KiteWeb.Telemetry,
+      Kite.Repo,
+      {DNSCluster, query: Application.get_env(:kite, :dns_cluster_query) || :ignore},
+      {Phoenix.PubSub, name: Kite.PubSub},
+      # Start a worker by calling: Kite.Worker.start_link(arg)
+      # {Kite.Worker, arg},
       # Start to serve requests, typically the last entry
-      PhoenixStarterWeb.Endpoint
+      KiteWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: PhoenixStarter.Supervisor]
+    opts = [strategy: :one_for_one, name: Kite.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
@@ -28,7 +28,7 @@ defmodule PhoenixStarter.Application do
   # whenever the application is updated.
   @impl true
   def config_change(changed, _new, removed) do
-    PhoenixStarterWeb.Endpoint.config_change(changed, removed)
+    KiteWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 end

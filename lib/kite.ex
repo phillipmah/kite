@@ -1,6 +1,6 @@
-defmodule PhoenixStarter do
+defmodule Kite do
   @moduledoc """
-  PhoenixStarter keeps the contexts that define your domain
+  Kite keeps the contexts that define your domain
   and business logic.
 
   Contexts are also responsible for managing your data, regardless
