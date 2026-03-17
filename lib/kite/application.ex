@@ -7,6 +7,8 @@ defmodule Kite.Application do
 
   @impl true
   def start(_type, _args) do
+    Kite.Sandbox.RateLimiter.setup()
+
     children = [
       KiteWeb.Telemetry,
       Kite.Repo,

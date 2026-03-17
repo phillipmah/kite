@@ -18,6 +18,7 @@ defmodule KiteWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live "/sandbox", SandboxLive, :index
   end
 
   # Other scopes may use custom stacks.
