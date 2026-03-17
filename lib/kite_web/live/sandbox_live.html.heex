@@ -1,0 +1,249 @@
+<div class="flex flex-col h-screen" id="sandbox-page">
+  <%!-- Header --%>
+  <div class="navbar bg-base-200 border-b border-base-300 px-4 sm:px-6 flex-none">
+    <div class="flex-1">
+      <a href="/" class="flex items-center gap-2">
+        <img src={~p"/images/logo.svg"} width="28" />
+        <span class="font-semibold text-sm">Kite</span>
+      </a>
+    </div>
+    <div class="flex-none gap-2">
+      <a href="/sandbox" class="btn btn-ghost btn-sm">Sandbox</a>
+      <a href="/" class="btn btn-primary btn-sm">Get Early Access</a>
+    </div>
+  </div>
+
+  <%!-- Page title --%>
+  <div class="bg-base-100 border-b border-base-300 px-4 sm:px-6 py-3 flex-none">
+    <h1 class="text-lg font-bold">Model Sandbox</h1>
+    <p class="text-sm text-base-content/60">Test how AI models respond to your child's questions</p>
+  </div>
+
+  <%!-- Controls row --%>
+  <div class="bg-base-100 border-b border-base-300 px-4 sm:px-6 py-3 flex-none">
+    <div class="flex flex-wrap gap-3 items-start">
+      <%!-- Model selector --%>
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-medium text-base-content/60">Model</label>
+        <select
+          name="model"
+          class="select select-bordered select-sm w-36"
+          phx-change="update_model"
+        >
+          <%= for model <- Kite.Sandbox.Models.all() do %>
+            <option value={model.id} selected={model.id == @model}>{model.name}</option>
+          <% end %>
+        </select>
+      </div>
+
+      <%!-- Child's age selector --%>
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-medium text-base-content/60">Child's Age</label>
+        <select
+          name="child_age"
+          class="select select-bordered select-sm w-36"
+          phx-change="update_child_age"
+        >
+          <%= for {value, label} <- [{"5", "5 years old"}, {"7", "7 years old"}, {"10", "10 years old"}, {"12", "12 years old"}, {"teenager", "Teenager"}] do %>
+            <option value={value} selected={value == @child_age}>{label}</option>
+          <% end %>
+        </select>
+      </div>
+
+      <%!-- Family context selector --%>
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-medium text-base-content/60">Family Context</label>
+        <select
+          name="family_context"
+          class="select select-bordered select-sm w-52"
+          phx-change="update_family_context"
+        >
+          <%= for {value, label} <- [
+            {"none", "None"},
+            {"conservative_religious", "Conservative religious"},
+            {"secular", "Secular"},
+            {"single_parent", "Single parent"},
+            {"multilingual", "Multilingual"},
+            {"custom", "Custom..."}
+          ] do %>
+            <option value={value} selected={value == @family_context}>{label}</option>
+          <% end %>
+        </select>
+      </div>
+
+      <%!-- Custom context input --%>
+      <%= if @family_context == "custom" do %>
+        <div class="flex flex-col gap-1 flex-1 min-w-48">
+          <label class="text-xs font-medium text-base-content/60">Describe the family context</label>
+          <input
+            type="text"
+            name="custom_context"
+            value={@custom_context}
+            placeholder="e.g. Family observes Shabbat, child attends Jewish day school"
+            class="input input-bordered input-sm w-full"
+            phx-change="update_custom_context"
+            phx-debounce="500"
+          />
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%!-- Context summary bar --%>
+  <div class="bg-base-200 border-b border-base-300 px-4 sm:px-6 py-2 flex-none">
+    <span class="text-xs text-base-content/60 font-medium">
+      {context_summary(@model, @child_age)}
+      <%= if @family_context != "none" do %>
+        <span class="mx-1">·</span>
+        <span>{family_label(@family_context)}</span>
+      <% end %>
+    </span>
+  </div>
+
+  <%!-- Daily limit reached banner --%>
+  <%= if @daily_limit_reached do %>
+    <div class="alert alert-warning rounded-none border-x-0 flex-none">
+      <.icon name="hero-clock" class="size-4" />
+      <span>Daily limit reached. Come back tomorrow!</span>
+    </div>
+  <% end %>
+
+  <%!-- Chat thread --%>
+  <div
+    id="chat-messages"
+    class="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4"
+    phx-hook="ScrollToBottom"
+  >
+    <%= for {message, i} <- Enum.with_index(@messages) do %>
+      <%= if message.role == "user" do %>
+        <div class="chat chat-end">
+          <div class="chat-bubble chat-bubble-primary max-w-sm sm:max-w-md">
+            {message.content}
+          </div>
+        </div>
+      <% else %>
+        <div class="chat chat-start" id={"msg-#{i}"}>
+          <div class="chat-header mb-1 flex items-center gap-2">
+            <span class="badge badge-ghost badge-sm text-xs">
+              {Kite.Sandbox.Models.name(message.model || @model)}
+            </span>
+          </div>
+          <div class="chat-bubble chat-bubble-neutral max-w-sm sm:max-w-lg whitespace-pre-wrap">
+            {message.content}
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+    <%!-- Loading indicator --%>
+    <%= if @loading do %>
+      <div class="chat chat-start">
+        <div class="chat-header mb-1">
+          <span class="badge badge-ghost badge-sm text-xs">
+            {Kite.Sandbox.Models.name(@model)}
+          </span>
+        </div>
+        <div class="chat-bubble chat-bubble-neutral">
+          <span class="loading loading-dots loading-sm"></span>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%!-- Input area --%>
+  <div class="bg-base-100 border-t border-base-300 px-4 sm:px-6 py-3 flex-none">
+    <form phx-submit="send_message" class="flex gap-2 items-end">
+      <div class="flex-1">
+        <textarea
+          name="message"
+          placeholder="Type a message..."
+          class="textarea textarea-bordered w-full resize-none"
+          rows="1"
+          disabled={@loading || @daily_limit_reached || @messages_remaining <= 0}
+          phx-key="Enter"
+          id="message-input"
+        >{@message_input}</textarea>
+      </div>
+      <div class="flex flex-col items-end gap-1">
+        <button
+          type="submit"
+          class="btn btn-primary btn-sm"
+          disabled={@loading || @daily_limit_reached || @messages_remaining <= 0}
+        >
+          <%= if @loading do %>
+            <span class="loading loading-spinner loading-xs"></span>
+          <% else %>
+            Send
+          <% end %>
+        </button>
+        <span class={[
+          "text-xs",
+          if(@messages_remaining <= 1, do: "text-warning font-medium", else: "text-base-content/50")
+        ]}>
+          <%= if @messages_remaining > 0 do %>
+            {@messages_remaining} {if @messages_remaining == 1, do: "message", else: "messages"} remaining
+          <% else %>
+            No messages remaining
+          <% end %>
+        </span>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%!-- Waitlist gate modal --%>
+<%= if @show_waitlist_gate do %>
+  <div class="modal modal-open">
+    <div class="modal-box max-w-md">
+      <%= if @waitlist_submitted do %>
+        <div class="text-center py-4">
+          <div class="text-4xl mb-4">🎉</div>
+          <h3 class="text-xl font-bold mb-2">You're on the list!</h3>
+          <p class="text-base-content/70 mb-6">
+            We'll be in touch when Kite is ready. In the meantime, you can still view the conversation above.
+          </p>
+          <button class="btn btn-ghost btn-sm" phx-click="dismiss_waitlist">
+            Close
+          </button>
+        </div>
+      <% else %>
+        <button
+          class="btn btn-ghost btn-sm btn-circle absolute right-2 top-2"
+          phx-click="dismiss_waitlist"
+        >
+          ✕
+        </button>
+        <h3 class="text-xl font-bold mb-1">You've used your 5 free messages</h3>
+        <p class="text-base-content/70 mb-6">
+          Join the waitlist to get early access and unlimited conversations.
+        </p>
+
+        <form phx-submit="submit_waitlist" class="space-y-3">
+          <div>
+            <input
+              type="email"
+              name="email"
+              value={@waitlist_email}
+              placeholder="your@email.com"
+              class={["input input-bordered w-full", if(@waitlist_error, do: "input-error")]}
+              required
+              autofocus
+            />
+            <%= if @waitlist_error do %>
+              <p class="text-error text-sm mt-1">{@waitlist_error}</p>
+            <% end %>
+          </div>
+          <button type="submit" class="btn btn-primary w-full">
+            Join the Waitlist
+          </button>
+        </form>
+        <p class="text-xs text-base-content/40 mt-3 text-center">
+          No spam. We'll only email you when we're ready.
+        </p>
+      <% end %>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+      <button phx-click="dismiss_waitlist">close</button>
+    </form>
+  </div>
+<% end %>
