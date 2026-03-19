@@ -1,0 +1,48 @@
+<h2>Model Sandbox — Clarifying Questions</h2>
+<p class="subtitle">Fleshing out the spec before wireframing</p>
+
+<div class="section" style="background: #1a2e1a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem;">
+  <h4 style="margin: 0; color: #4ade80;">✓ Q1: Models</h4>
+  <p style="margin: 0.5rem 0 0 0; color: #888;">Claude, GPT-4, Gemini, Llama, Mistral — configurable list</p>
+</div>
+
+<div class="section" style="background: #1a2e1a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+  <h4 style="margin: 0; color: #4ade80;">✓ Q2: System Context</h4>
+  <p style="margin: 0.5rem 0 0 0; color: #888;">Child age presets (5yo, 10yo, teen) + free-form custom text field</p>
+</div>
+
+<div class="section">
+  <h3>Question 3: Question Input</h3>
+  <p>Should we provide example questions, or just a free-form input?</p>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="free-form" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Free-form only</h3>
+      <p>Just a text area for questions. User types anything.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="examples" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Example prompts</h3>
+      <p>Show 3–5 sample questions users can click to try. Educational/homework-focused.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="categories" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Category examples</h3>
+      <p>Example questions organized by category: Homework help, Sensitive topics, Creative play, etc.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="bank" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Link to Question Bank</h3>
+      <p>Pull questions from the Question Bank Manager. User can browse and select.</p>
+    </div>
+  </div>
+</div>

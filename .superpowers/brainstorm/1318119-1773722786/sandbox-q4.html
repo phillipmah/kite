@@ -1,0 +1,46 @@
+<h2>Model Sandbox — Clarifying Questions</h2>
+<p class="subtitle">Fleshing out the spec before wireframing</p>
+
+<div class="section" style="background: #1a2e1a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem;">
+  <h4 style="margin: 0; color: #4ade80;">✓ Q1: Models</h4>
+  <p style="margin: 0.5rem 0 0 0; color: #888;">Claude, GPT-4, Gemini, Llama, Mistral — configurable list</p>
+</div>
+
+<div class="section" style="background: #1a2e1a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem;">
+  <h4 style="margin: 0; color: #4ade80;">✓ Q2: System Context</h4>
+  <p style="margin: 0.5rem 0 0 0; color: #888;">Child age presets (5yo, 10yo, teen) + free-form custom text field</p>
+</div>
+
+<div class="section" style="background: #1a2e1a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+  <h4 style="margin: 0; color: #4ade80;">✓ Q3: Question Input</h4>
+  <p style="margin: 0.5rem 0 0 0; color: #888;">Free-form text area with thought-provoking default placeholder questions</p>
+</div>
+
+<div class="section">
+  <h3>Question 4: Response Display</h3>
+  <p>How should we show model responses?</p>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="single" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Single model at a time</h3>
+      <p>Dropdown to switch between models. Show one response, then switch.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="side-by-side" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Side-by-side comparison</h3>
+      <p>Select 2–3 models, show all responses simultaneously for comparison.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="all" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>All models at once</h3>
+      <p>Show all model responses by default. Scroll through 5+ responses.</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<h2>Model Sandbox — Clarifying Questions</h2>
+<p class="subtitle">Fleshing out the spec before wireframing</p>
+
+<div class="section" style="background: #1a2e1a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem;">
+  <h4 style="margin: 0; color: #4ade80;">✓ Q1: Models</h4>
+  <p style="margin: 0.5rem 0 0 0; color: #888;">Claude, GPT-4, Gemini, Llama, Mistral — configurable list</p>
+</div>
+
+<div class="section" style="background: #1a2e1a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem;">
+  <h4 style="margin: 0; color: #4ade80;">✓ Q2: System Context</h4>
+  <p style="margin: 0.5rem 0 0 0; color: #888;">Child age presets (5yo, 10yo, teen) + free-form custom text field</p>
+</div>
+
+<div class="section" style="background: #1a2e1a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem;">
+  <h4 style="margin: 0; color: #4ade80;">✓ Q3: Question Input</h4>
+  <p style="margin: 0.5rem 0 0 0; color: #888;">Free-form text area with thought-provoking default placeholder questions</p>
+</div>
+
+<div class="section" style="background: #1a2e1a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem;">
+  <h4 style="margin: 0; color: #4ade80;">✓ Q4: Response Display</h4>
+  <p style="margin: 0.5rem 0 0 0; color: #888;">Single model at a time — dropdown to switch</p>
+</div>
+
+<div class="section" style="background: #1a2e1a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+  <h4 style="margin: 0; color: #4ade80;">✓ Q5: Usage Limits</h4>
+  <p style="margin: 0.5rem 0 0 0; color: #888;">5 free questions → waitlist gate for unlimited · Max 50/day per IP (abuse prevention)</p>
+</div>
+
+<div class="section">
+  <h3>Question 6: Data Collection</h3>
+  <p>What should we log for product insights?</p>
+</div>
+
+<div class="options" data-multiselect>
+  <div class="option" data-choice="questions" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Questions asked</h3>
+      <p>Store every question text for later analysis</p>
+    </div>
+  </div>
+  <div class="option" data-choice="responses" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Model responses</h3>
+      <p>Store the full response text from each model</p>
+    </div>
+  </div>
+  <div class="option" data-choice="metadata" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Session metadata</h3>
+      <p>Timestamp, model selected, system context used, response time</p>
+    </div>
+  </div>
+  <div class="option" data-choice="analytics" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Aggregate analytics only</h3>
+      <p>Counts: questions per model, popular contexts, etc. No raw text stored.</p>
+    </div>
+  </div>
+</div>
+
+<p style="margin-top: 1rem; color: #888;">Select all that apply.</p>

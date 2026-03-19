@@ -1,0 +1,61 @@
+<h2>Model Sandbox — Clarifying Questions</h2>
+<p class="subtitle">Fleshing out the spec before wireframing</p>
+
+<div class="section" style="background: #1a2e1a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem;">
+  <h4 style="margin: 0; color: #4ade80;">✓ Q1: Models</h4>
+  <p style="margin: 0.5rem 0 0 0; color: #888;">Claude, GPT-4, Gemini, Llama, Mistral — configurable list</p>
+</div>
+
+<div class="section" style="background: #1a2e1a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem;">
+  <h4 style="margin: 0; color: #4ade80;">✓ Q2: System Context</h4>
+  <p style="margin: 0.5rem 0 0 0; color: #888;">Child age presets (5yo, 10yo, teen) + free-form custom text field</p>
+</div>
+
+<div class="section" style="background: #1a2e1a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem;">
+  <h4 style="margin: 0; color: #4ade80;">✓ Q3: Question Input</h4>
+  <p style="margin: 0.5rem 0 0 0; color: #888;">Free-form text area with thought-provoking default placeholder questions</p>
+</div>
+
+<div class="section" style="background: #1a2e1a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem;">
+  <h4 style="margin: 0; color: #4ade80;">✓ Q4: Response Display</h4>
+  <p style="margin: 0.5rem 0 0 0; color: #888;">Single model at a time — dropdown to switch</p>
+</div>
+
+<div class="section" style="background: #1a2e1a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem;">
+  <h4 style="margin: 0; color: #4ade80;">✓ Q5: Usage Limits</h4>
+  <p style="margin: 0.5rem 0 0 0; color: #888;">5 free questions → waitlist gate for unlimited · Max 50/day per IP</p>
+</div>
+
+<div class="section" style="background: #1a2e1a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+  <h4 style="margin: 0; color: #4ade80;">✓ Q6: Data Collection</h4>
+  <p style="margin: 0.5rem 0 0 0; color: #888;">Log everything: questions, responses, session metadata (model, context, timestamp, response time)</p>
+</div>
+
+<div class="section">
+  <h3>Question 7: Share Feature</h3>
+  <p>Should users be able to share their question + response?</p>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="no-share" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>No share</h3>
+      <p>Keep it simple. No sharing for MVP.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="share-link" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Share link</h3>
+      <p>Generate a unique URL for the conversation. Shareable via link.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="share-image" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Share as image</h3>
+      <p>Generate an image card (like Twitter cards) for social sharing.</p>
+    </div>
+  </div>
+</div>

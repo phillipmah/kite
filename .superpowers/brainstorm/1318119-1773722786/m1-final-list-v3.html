@@ -1,0 +1,74 @@
+<h2>M1 Feature Pages</h2>
+<p class="subtitle">Individual Phoenix LiveView pages, one route each.</p>
+
+<div class="mockup">
+  <div class="mockup-header">Proposed M1 Routes</div>
+  <div class="mockup-body" style="font-family: monospace; font-size: 0.9rem;">
+    <table style="width: 100%; border-collapse: collapse;">
+      <tr style="border-bottom: 1px solid #333;">
+        <td style="padding: 0.75rem;"><strong>/sandbox</strong></td>
+        <td style="padding: 0.75rem;">Model Sandbox</td>
+        <td style="padding: 0.75rem; color: #4ade80;">Public</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #333;">
+        <td style="padding: 0.75rem;"><strong>/index</strong></td>
+        <td style="padding: 0.75rem;">Family AI Safety Index</td>
+        <td style="padding: 0.75rem; color: #4ade80;">Public</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #333;">
+        <td style="padding: 0.75rem;"><strong>/questions</strong></td>
+        <td style="padding: 0.75rem;">Question Bank Manager</td>
+        <td style="padding: 0.75rem; color: #fb923c;">Admin</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #333;">
+        <td style="padding: 0.75rem;"><strong>/benchmark</strong></td>
+        <td style="padding: 0.75rem;">Benchmark Runner</td>
+        <td style="padding: 0.75rem; color: #fb923c;">Admin</td>
+      </tr>
+    </table>
+    <p style="margin-top: 1rem; color: #888; font-size: 0.85rem;">
+      <span style="color: #4ade80;">●</span> Public — accessible to anyone<br>
+      <span style="color: #fb923c;">●</span> Admin — internal tool for managing benchmarks
+    </p>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 1.5rem;">
+  <h3>Benchmark Runner Details</h3>
+  <p>Combined compare + judge functionality:</p>
+  <ul style="color: #aaa; margin-left: 1.5rem;">
+    <li>View all model answers for a question</li>
+    <li>Run LLM-as-judge evaluation</li>
+    <li>See performance metrics per question/model</li>
+    <li>Manage eval runs and results</li>
+  </ul>
+</div>
+
+<div class="section" style="margin-top: 1.5rem;">
+  <h3>Spec Structure</h3>
+  <p>What sections should each vault spec contain?</p>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="minimal" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Minimal</h3>
+      <p>Title, Purpose, Open Questions, Status</p>
+    </div>
+  </div>
+  <div class="option" data-choice="standard" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Standard</h3>
+      <p>Title, Purpose, Requirements, User Stories, Open Questions, Out of Scope, Status</p>
+    </div>
+  </div>
+  <div class="option" data-choice="full" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Full</h3>
+      <p>Standard + Wireframe placeholder, Technical Notes, Dependencies, Success Metrics</p>
+    </div>
+  </div>
+</div>
