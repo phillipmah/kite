@@ -2,4 +2,4 @@
 set -eu
 
 cd -P -- "$(dirname -- "$0")"
-PHX_SERVER=true exec ./phoenix_starter start
+PHX_SERVER=true exec ./kite start
