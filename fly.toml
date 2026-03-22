@@ -10,7 +10,7 @@ kill_signal = 'SIGTERM'
 [build]
 
 [deploy]
-  release_command = '/app/bin/migrate'
+  release_command = '/app/bin/kite eval "Kite.Release.migrate"'
 
 [env]
   PHX_HOST = 'phoenix-starter-wild-dew-1011.fly.dev'
