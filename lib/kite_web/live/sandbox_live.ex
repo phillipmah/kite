@@ -8,8 +8,7 @@ defmodule KiteWeb.SandboxLive do
 
   @welcome_message %{
     role: "assistant",
-    content:
-      "Hi! I'm here to help answer questions. What would you like to know about?",
+    content: "Hi! I'm here to help answer questions. What would you like to know about?",
     model: "claude",
     sent_at: nil
   }
@@ -149,8 +148,7 @@ defmodule KiteWeb.SandboxLive do
   def handle_async(:ai_response, {:exit, reason}, socket) do
     error_message = %{
       role: "assistant",
-      content:
-        "Sorry, I couldn't get a response. Please try again. (#{format_error(reason)})",
+      content: "Sorry, I couldn't get a response. Please try again. (#{format_error(reason)})",
       model: socket.assigns.model,
       sent_at: DateTime.utc_now()
     }

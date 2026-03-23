@@ -46,7 +46,8 @@ defmodule Kite.Sandbox.AIClient do
           {:ok, text}
 
         {:ok, %{status: status, body: body}} ->
-          {:error, "Claude API error #{status}: #{Map.get(body, "error", %{}) |> Map.get("message", "unknown")}"}
+          {:error,
+           "Claude API error #{status}: #{Map.get(body, "error", %{}) |> Map.get("message", "unknown")}"}
 
         {:error, reason} ->
           {:error, "Claude request failed: #{inspect(reason)}"}
@@ -116,7 +117,9 @@ defmodule Kite.Sandbox.AIClient do
 
       case Req.post(url, json: body, receive_timeout: 30_000) do
         {:ok, %{status: 200, body: body}} ->
-          text = get_in(body, ["candidates", Access.at(0), "content", "parts", Access.at(0), "text"])
+          text =
+            get_in(body, ["candidates", Access.at(0), "content", "parts", Access.at(0), "text"])
+
           {:ok, text}
 
         {:ok, %{status: status, body: body}} ->

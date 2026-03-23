@@ -17,7 +17,7 @@ defmodule KiteWeb.Router do
   scope "/", KiteWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", HomeLive, :index
     live "/sandbox", SandboxLive, :index
   end
 

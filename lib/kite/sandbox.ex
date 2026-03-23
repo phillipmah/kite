@@ -83,8 +83,7 @@ defmodule Kite.Sandbox do
     do: "This child lives in a single parent household."
 
   defp family_context_text("multilingual", _),
-    do:
-      "This child lives in a multilingual household and may be learning multiple languages."
+    do: "This child lives in a multilingual household and may be learning multiple languages."
 
   defp family_context_text("custom", custom) when is_binary(custom) and custom != "",
     do: "Additional context about this child's family: #{custom}"

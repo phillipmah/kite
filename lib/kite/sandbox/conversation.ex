@@ -17,7 +17,14 @@ defmodule Kite.Sandbox.Conversation do
 
   def changeset(conversation, attrs) do
     conversation
-    |> cast(attrs, [:session_id, :ip_address, :model, :child_age, :family_context, :custom_context])
+    |> cast(attrs, [
+      :session_id,
+      :ip_address,
+      :model,
+      :child_age,
+      :family_context,
+      :custom_context
+    ])
     |> validate_required([:session_id, :model, :child_age, :family_context])
   end
 end

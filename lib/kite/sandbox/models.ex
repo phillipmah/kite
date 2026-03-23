@@ -3,7 +3,12 @@ defmodule Kite.Sandbox.Models do
     %{id: "claude", name: "Claude", provider: :anthropic, model_id: "claude-opus-4-5"},
     %{id: "gpt4", name: "GPT-4", provider: :openai, model_id: "gpt-4o"},
     %{id: "gemini", name: "Gemini", provider: :google, model_id: "gemini-1.5-flash"},
-    %{id: "llama", name: "Llama", provider: :together, model_id: "meta-llama/Llama-3-70b-chat-hf"},
+    %{
+      id: "llama",
+      name: "Llama",
+      provider: :together,
+      model_id: "meta-llama/Llama-3-70b-chat-hf"
+    },
     %{id: "mistral", name: "Mistral", provider: :mistral, model_id: "mistral-large-latest"}
   ]
 

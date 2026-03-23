@@ -1,0 +1,257 @@
+<h2>Model Sandbox — Wireframe v2</h2>
+<p class="subtitle">Chat thread UI with corrected context framing</p>
+
+<style>
+.wireframe {
+  background: #0f172a;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+.wf-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #334155;
+  margin-bottom: 1rem;
+}
+.wf-logo {
+  font-weight: bold;
+  color: #fff;
+}
+.wf-nav-links {
+  display: flex;
+  gap: 1rem;
+  color: #94a3b8;
+  font-size: 0.875rem;
+}
+.wf-nav-cta {
+  background: #3b82f6;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+}
+.wf-hero {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.wf-hero h1 {
+  color: #fff;
+  font-size: 1.75rem;
+  margin: 0;
+}
+.wf-hero p {
+  color: #94a3b8;
+  margin: 0.5rem 0 0 0;
+}
+.wf-config {
+  background: #1e293b;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.wf-field {
+  flex: 1;
+  min-width: 150px;
+}
+.wf-label {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+.wf-select {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  color: #fff;
+  width: 100%;
+  box-sizing: border-box;
+}
+.wf-chat {
+  background: #1e293b;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  min-height: 300px;
+  margin-bottom: 1rem;
+}
+.wf-message {
+  margin-bottom: 1rem;
+  max-width: 80%;
+}
+.wf-message-user {
+  margin-left: auto;
+  background: #3b82f6;
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 1rem 1rem 0.25rem 1rem;
+}
+.wf-message-ai {
+  background: #334155;
+  color: #e2e8f0;
+  padding: 0.75rem 1rem;
+  border-radius: 1rem 1rem 1rem 0.25rem;
+  line-height: 1.5;
+}
+.wf-model-badge {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  margin-bottom: 0.25rem;
+}
+.wf-input-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+.wf-textarea {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 0.375rem;
+  padding: 0.75rem;
+  color: #fff;
+  flex: 1;
+  min-height: 44px;
+  max-height: 120px;
+  resize: none;
+}
+.wf-button {
+  background: #3b82f6;
+  color: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.wf-counter {
+  color: #94a3b8;
+  font-size: 0.875rem;
+  text-align: right;
+  margin-top: 0.5rem;
+}
+</style>
+
+<div class="wireframe">
+  <div class="wf-nav">
+    <div class="wf-logo">🪁 Kite</div>
+    <div class="wf-nav-links">
+      <span>Sandbox</span>
+      <span>Index</span>
+    </div>
+    <div class="wf-nav-cta">Join Waitlist</div>
+  </div>
+
+  <div class="wf-hero">
+    <h1>Model Sandbox</h1>
+    <p>Test how AI models respond to your child's questions</p>
+  </div>
+
+  <div class="wf-config">
+    <div class="wf-field">
+      <div class="wf-label">Model</div>
+      <select class="wf-select">
+        <option>Claude</option>
+        <option>GPT-4</option>
+        <option>Gemini</option>
+        <option>Llama</option>
+        <option>Mistral</option>
+      </select>
+    </div>
+    <div class="wf-field">
+      <div class="wf-label">Child's Age</div>
+      <select class="wf-select">
+        <option>5 years old</option>
+        <option>7 years old</option>
+        <option>10 years old</option>
+        <option>12 years old</option>
+        <option>Teenager</option>
+      </select>
+    </div>
+    <div class="wf-field">
+      <div class="wf-label">Family Context</div>
+      <select class="wf-select">
+        <option>None (default)</option>
+        <option>Conservative religious family</option>
+        <option>Secular family</option>
+        <option>Single parent household</option>
+        <option>Multilingual household</option>
+        <option>Custom...</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="wf-chat" id="chat-container">
+    <div class="wf-model-badge">Claude · Child is 10 years old</div>
+    <div class="wf-message wf-message-ai">
+      Hello! I'm here to help answer your questions. What would you like to know about?
+    </div>
+
+    <div class="wf-message wf-message-user">
+      What happens when we die?
+    </div>
+
+    <div class="wf-model-badge">Claude</div>
+    <div class="wf-message wf-message-ai">
+      That's a really thoughtful question. Different people believe different things. Some believe in heaven or an afterlife. Others think we become part of nature again. What have you heard about it?
+    </div>
+
+    <div class="wf-message wf-message-user">
+      My grandma says we go to heaven. Is that true?
+    </div>
+
+    <div class="wf-model-badge">Claude</div>
+    <div class="wf-message wf-message-ai">
+      Your grandma's belief is shared by many people around the world. Whether heaven exists is something people have different views on — some are very certain it's real, others aren't sure, and some don't believe in it. What do you think about what she said?
+    </div>
+  </div>
+
+  <div class="wf-input-row">
+    <textarea class="wf-textarea" placeholder="Type a message..."></textarea>
+    <button class="wf-button">Send</button>
+  </div>
+  <div class="wf-counter">5 questions remaining</div>
+</div>
+
+<div class="section" style="margin-top: 1.5rem;">
+  <h3>Changes from v1</h3>
+  <ul style="color: #4ade80; margin-left: 1.5rem;">
+    <li><strong>Age context:</strong> "Child is X years old" (not "Answer as")</li>
+    <li><strong>Family context:</strong> Presets about child's situation (conservative religious, secular, etc.)</li>
+    <li><strong>Chat thread UI:</strong> Conversation with message history, like a real chat</li>
+    <li><strong>Model badge:</strong> Shows which model + child context on each AI response</li>
+  </ul>
+</div>
+
+<div class="section" style="margin-top: 1.5rem;">
+  <h3>Open Questions</h3>
+  <ul style="color: #fbbf24; margin-left: 1.5rem;">
+    <li>Should "Send" button clear on send, or wait for response?</li>
+    <li>Do we show a loading state while waiting for model response?</li>
+    <li>How does the 5-question limit work in a chat? Per message? Per conversation turn?</li>
+    <li>Can users clear/reset the conversation?</li>
+    <li>What happens if they switch models mid-conversation?</li>
+  </ul>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="approve" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Looks good</h3>
+      <p>Let's discuss the open questions</p>
+    </div>
+  </div>
+  <div class="option" data-choice="revise" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Needs more changes</h3>
+      <p>Tell me what to adjust</p>
+    </div>
+  </div>
+</div>

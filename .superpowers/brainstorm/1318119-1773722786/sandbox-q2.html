@@ -1,0 +1,45 @@
+<h2>Model Sandbox — Clarifying Questions</h2>
+<p class="subtitle">Fleshing out the spec before wireframing</p>
+
+<div class="section" style="background: #1a2e1a; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+  <h4 style="margin: 0; color: #4ade80;">✓ Q1: Models</h4>
+  <p style="margin: 0.5rem 0 0 0; color: #888;">Claude, GPT-4, Gemini, Llama, Mistral — configurable list for future expansion</p>
+</div>
+
+<div class="section">
+  <h3>Question 2: System Context Presets</h3>
+  <p>What preset system prompts should we offer?</p>
+</div>
+
+<div class="options" data-multiselect>
+  <div class="option" data-choice="child-age" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Child age variants</h3>
+      <p>"Answer as a 5-year-old", "Answer as a 10-year-old", "Answer as a teenager"</p>
+    </div>
+  </div>
+  <div class="option" data-choice="persona" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Educational personas</h3>
+      <p>"Helpful tutor", "Socratic teacher", "Strict parent", "Curious friend"</p>
+    </div>
+  </div>
+  <div class="option" data-choice="safety" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Safety modes</h3>
+      <p>"Maximum safety", "Balanced", "Unrestricted" (if available)</p>
+    </div>
+  </div>
+  <div class="option" data-choice="custom" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Free-form only</h3>
+      <p>No presets — just a text field for custom system context</p>
+    </div>
+  </div>
+</div>
+
+<p style="margin-top: 1rem; color: #888;">Select all that apply, or pick D for custom-only.</p>

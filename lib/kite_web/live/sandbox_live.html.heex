@@ -16,7 +16,9 @@
   <%!-- Page title --%>
   <div class="bg-base-100 border-b border-base-300 px-4 sm:px-6 py-3 flex-none">
     <h1 class="text-lg font-bold">Model Sandbox</h1>
-    <p class="text-sm text-base-content/60">Test how AI models respond to your child's questions</p>
+    <p class="text-sm text-base-content/60">
+      Test how AI models respond to your child's questions
+    </p>
   </div>
 
   <%!-- Controls row --%>
@@ -74,7 +76,9 @@
       <%!-- Custom context input --%>
       <%= if @family_context == "custom" do %>
         <div class="flex flex-col gap-1 flex-1 min-w-48">
-          <label class="text-xs font-medium text-base-content/60">Describe the family context</label>
+          <label class="text-xs font-medium text-base-content/60">
+            Describe the family context
+          </label>
           <input
             type="text"
             name="custom_context"
@@ -178,7 +182,10 @@
         </button>
         <span class={[
           "text-xs",
-          if(@messages_remaining <= 1, do: "text-warning font-medium", else: "text-base-content/50")
+          if(@messages_remaining <= 1,
+            do: "text-warning font-medium",
+            else: "text-base-content/50"
+          )
         ]}>
           <%= if @messages_remaining > 0 do %>
             {@messages_remaining} {if @messages_remaining == 1, do: "message", else: "messages"} remaining

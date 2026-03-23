@@ -1,0 +1,518 @@
+<Layouts.flash_group flash={@flash} />
+
+<%!-- NAV --%>
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
+  <div class="mx-auto max-w-6xl px-6 lg:px-8 flex h-16 items-center justify-between">
+    <a href="/" class="flex items-center gap-2.5">
+      <%!-- Kite logo mark --%>
+      <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 2 L28 16 L16 30 L4 16 Z" fill="#0ea5e9" opacity="0.15" />
+        <path d="M16 2 L28 16 L16 30 L4 16 Z" stroke="#0ea5e9" stroke-width="1.5" fill="none" />
+        <path d="M16 2 L16 30" stroke="#0ea5e9" stroke-width="1.5" opacity="0.4" />
+        <path d="M4 16 L28 16" stroke="#0ea5e9" stroke-width="1.5" opacity="0.4" />
+        <circle cx="16" cy="16" r="2.5" fill="#0ea5e9" />
+        <path d="M16 30 Q18 33 16 36" stroke="#94a3b8" stroke-width="1" stroke-linecap="round" />
+      </svg>
+      <span class="text-lg font-bold text-slate-900 tracking-tight">kite</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a
+        href="#how-it-works"
+        class="text-sm text-slate-600 hover:text-slate-900 transition-colors"
+      >
+        How it works
+      </a>
+      <a href="#privacy" class="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+        Privacy
+      </a>
+      <a
+        href="#waitlist"
+        class="text-sm font-medium bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-full transition-colors"
+      >
+        Join waitlist
+      </a>
+    </div>
+    <a
+      href="#waitlist"
+      class="md:hidden text-sm font-medium bg-sky-500 text-white px-4 py-2 rounded-full"
+    >
+      Join waitlist
+    </a>
+  </div>
+</nav>
+
+<%!-- HERO --%>
+<section class="pt-32 pb-20 px-6 lg:px-8 bg-gradient-to-b from-sky-50 to-white">
+  <div class="mx-auto max-w-4xl text-center">
+    <div class="inline-flex items-center gap-2 bg-sky-100 text-sky-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-8 tracking-wide uppercase">
+      <span class="w-1.5 h-1.5 bg-sky-500 rounded-full animate-pulse"></span>
+      Early access — joining now
+    </div>
+    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-slate-900 leading-tight tracking-tighter">
+      Let them fly.<br />
+      <span class="text-sky-500">Stay connected.</span>
+    </h1>
+    <p class="mt-6 text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+      Kite is the family AI layer that helps children learn and grow in the age of AI — while keeping parents meaningfully connected to their child's curiosity.
+    </p>
+    <p class="mt-2 text-base text-slate-400">
+      For families with children aged 5–13 &middot; Built in Switzerland &middot; CHF 12/month
+    </p>
+
+    <%!-- Hero CTA --%>
+    <div id="hero-waitlist" class="mt-10 max-w-md mx-auto">
+      <%= if @hero_phase == :form do %>
+        <.form
+          for={@hero_form}
+          id="hero-form"
+          phx-submit="hero_submit"
+          phx-change="validate_hero"
+          class="flex flex-col sm:flex-row gap-3"
+        >
+          <div class="flex-1">
+            <.input
+              field={@hero_form[:email]}
+              type="email"
+              placeholder="your@email.com"
+              class="w-full px-4 py-3 rounded-full border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent text-sm"
+            />
+          </div>
+          <button
+            type="submit"
+            class="px-6 py-3 bg-sky-500 hover:bg-sky-600 text-white font-semibold rounded-full transition-colors text-sm whitespace-nowrap phx-submit-loading:opacity-60 phx-submit-loading:cursor-wait"
+          >
+            Join the waitlist
+          </button>
+        </.form>
+        <p class="mt-3 text-xs text-slate-400">No spam. Unsubscribe anytime.</p>
+      <% end %>
+
+      <%= if @hero_phase == :survey do %>
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 text-left shadow-sm">
+          <p class="text-sm font-semibold text-slate-800 mb-1">You're on the list! 🪁</p>
+          <p class="text-xs text-slate-500 mb-5">
+            Two quick questions to help us build the right thing — totally optional.
+          </p>
+
+          <form phx-submit="submit_survey">
+            <%!-- Name --%>
+            <div class="mb-4">
+              <label class="block text-xs font-medium text-slate-700 mb-1.5">
+                What's your name?
+              </label>
+              <input
+                type="text"
+                name="survey[name]"
+                placeholder="Your name"
+                class="w-full px-3 py-2 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 text-sm"
+              />
+            </div>
+
+            <%!-- Child ages --%>
+            <div class="mb-4">
+              <label class="block text-xs font-medium text-slate-700 mb-1.5">
+                How old are your kids?
+              </label>
+              <div class="flex flex-wrap gap-2">
+                <%= for {label, value} <- [{"3–5", "3-5"}, {"6–9", "6-9"}, {"10–12", "10-12"}, {"13+", "13+"}] do %>
+                  <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="survey[child_ages][]"
+                      value={value}
+                      class="rounded border-slate-300 text-sky-500 focus:ring-sky-400"
+                    />
+                    <span class="text-xs text-slate-700">{label}</span>
+                  </label>
+                <% end %>
+              </div>
+            </div>
+
+            <%!-- Worries --%>
+            <div class="mb-4">
+              <label class="block text-xs font-medium text-slate-700 mb-1.5">
+                What worries you most?
+                <span class="font-normal text-slate-400">(pick all that apply)</span>
+              </label>
+              <div class="space-y-1.5">
+                <%= for {label, value} <- [
+                  {"AI doing their homework for them", "homework"},
+                  {"Not knowing what they're asking AI", "no_visibility"},
+                  {"Inappropriate content", "inappropriate_content"},
+                  {"AI giving wrong information", "misinformation"}
+                ] do %>
+                  <label class="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="survey[worries][]"
+                      value={value}
+                      class="rounded border-slate-300 text-sky-500 focus:ring-sky-400"
+                    />
+                    <span class="text-xs text-slate-700">{label}</span>
+                  </label>
+                <% end %>
+              </div>
+            </div>
+
+            <%!-- Top priority --%>
+            <div class="mb-5">
+              <label class="block text-xs font-medium text-slate-700 mb-1.5">
+                What's most important to you?
+              </label>
+              <div class="space-y-1.5">
+                <%= for {label, value} <- [
+                  {"AI Safety — keeping kids safe online", "ai_safety"},
+                  {"Weekly Reporting — knowing what they're curious about", "weekly_reporting"},
+                  {"AI Tutor — helping them learn, not just get answers", "ai_tutor"},
+                  {"Adaptive Filters — controls that grow with my child", "adaptive_filters"}
+                ] do %>
+                  <label class="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="survey[top_priority]"
+                      value={value}
+                      class="border-slate-300 text-sky-500 focus:ring-sky-400"
+                    />
+                    <span class="text-xs text-slate-700">{label}</span>
+                  </label>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <button
+                type="submit"
+                class="flex-1 py-2 bg-sky-500 hover:bg-sky-600 text-white text-xs font-semibold rounded-lg transition-colors phx-submit-loading:opacity-60"
+              >
+                Submit
+              </button>
+              <button
+                type="button"
+                phx-click="skip_survey"
+                class="text-xs text-slate-400 hover:text-slate-600 transition-colors"
+              >
+                Skip
+              </button>
+            </div>
+          </form>
+        </div>
+      <% end %>
+
+      <%= if @hero_phase == :done do %>
+        <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 text-center">
+          <div class="text-2xl mb-2">🪁</div>
+          <p class="font-semibold text-emerald-800">You're on the list!</p>
+          <p class="text-sm text-emerald-600 mt-1">
+            We'll reach out when Kite is ready for your family.
+          </p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%!-- Hero illustration --%>
+  <div class="mt-16 mx-auto max-w-3xl">
+    <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 overflow-hidden">
+      <%!-- Weekly Curiosity Report mockup --%>
+      <div class="bg-gradient-to-r from-sky-500 to-sky-400 px-6 py-4 flex items-center gap-3">
+        <div class="w-3 h-3 bg-white/30 rounded-full"></div>
+        <div class="w-3 h-3 bg-white/30 rounded-full"></div>
+        <div class="w-3 h-3 bg-white/30 rounded-full"></div>
+        <span class="ml-2 text-white/80 text-sm font-medium">
+          Weekly Curiosity Report — Noah, age 9
+        </span>
+      </div>
+      <div class="p-6 sm:p-8 space-y-5">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center flex-shrink-0 text-lg">
+            🔭
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-slate-800">Big questions this week</p>
+            <p class="text-sm text-slate-500 mt-0.5">
+              Noah asked 3 questions about black holes and whether time travel is possible. He seems drawn to physics.
+            </p>
+          </div>
+        </div>
+        <div class="h-px bg-slate-100"></div>
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 bg-rose-100 rounded-xl flex items-center justify-center flex-shrink-0 text-lg">
+            📐
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-slate-800">Struggling with: fractions</p>
+            <p class="text-sm text-slate-500 mt-0.5">
+              He's asked for homework help on fractions 4 times this week. Try doubling a recipe together this weekend — it's a natural way to practice.
+            </p>
+          </div>
+        </div>
+        <div class="h-px bg-slate-100"></div>
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 bg-sky-100 rounded-xl flex items-center justify-center flex-shrink-0 text-lg">
+            💬
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-slate-800">Conversation starter</p>
+            <p class="text-sm text-slate-500 mt-0.5">
+              Noah asked about death twice this week in different ways. Here are 3 age-appropriate ways to open that conversation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%!-- PROBLEM --%>
+<section class="py-20 px-6 lg:px-8 bg-white">
+  <div class="mx-auto max-w-4xl">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+        Every parent knows the feeling.
+      </h2>
+      <p class="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">
+        Your child disappears into their device for an hour. You have no idea whether they were learning, being misled, or asking an AI to write their essay for them.
+      </p>
+    </div>
+    <div class="grid sm:grid-cols-3 gap-6">
+      <div class="bg-slate-50 rounded-2xl p-6">
+        <div class="text-2xl mb-3">🤖</div>
+        <p class="font-semibold text-slate-800 text-sm">AI that does the homework</p>
+        <p class="text-slate-500 text-sm mt-1">
+          Kids are using AI to get answers, not understanding. Kite intercepts and turns it into guided discovery instead.
+        </p>
+      </div>
+      <div class="bg-slate-50 rounded-2xl p-6">
+        <div class="text-2xl mb-3">🔒</div>
+        <p class="font-semibold text-slate-800 text-sm">Blunt filters that don't adapt</p>
+        <p class="text-slate-500 text-sm mt-1">
+          Generic parental controls block too much or too little and never grow with your child. Kite learns what your family needs.
+        </p>
+      </div>
+      <div class="bg-slate-50 rounded-2xl p-6">
+        <div class="text-2xl mb-3">👁️</div>
+        <p class="font-semibold text-slate-800 text-sm">No window into their world</p>
+        <p class="text-slate-500 text-sm mt-1">
+          You don't know what questions your child is wrestling with. Kite surfaces the insights that matter — without surveilling everything.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%!-- HOW IT WORKS --%>
+<section id="how-it-works" class="py-20 px-6 lg:px-8 bg-sky-50">
+  <div class="mx-auto max-w-5xl">
+    <div class="text-center mb-14">
+      <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+        Built for families. Not just parents.
+      </h2>
+      <p class="mt-4 text-lg text-slate-500 max-w-xl mx-auto">
+        Kite works for both sides of the conversation — a trusted companion for children, a weekly briefing for parents.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8">
+      <%!-- Feature 1: Tutor --%>
+      <div class="bg-white rounded-3xl p-7 shadow-sm border border-sky-100">
+        <div class="w-12 h-12 bg-sky-100 rounded-2xl flex items-center justify-center mb-5">
+          <svg
+            class="w-6 h-6 text-sky-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
+            />
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900">The AI tutor, not the shortcut</h3>
+        <p class="mt-3 text-sm text-slate-500 leading-relaxed">
+          When a child asks Kite to do their homework, Kite asks questions back — guiding them to the answer through Socratic learning. Never refusing. Never just giving the answer.
+        </p>
+        <div class="mt-5 bg-slate-50 rounded-xl p-4 text-xs text-slate-500 italic leading-relaxed">
+          "I need help with fractions."
+          <span class="text-sky-500 font-medium not-italic">
+            → "What do you think the bottom number means?"
+          </span>
+        </div>
+      </div>
+
+      <%!-- Feature 2: Weekly Report --%>
+      <div class="bg-white rounded-3xl p-7 shadow-sm border border-sky-100">
+        <div class="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center mb-5">
+          <svg
+            class="w-6 h-6 text-amber-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
+            />
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900">The Weekly Curiosity Report</h3>
+        <p class="mt-3 text-sm text-slate-500 leading-relaxed">
+          Every week, parents get a plain-language summary of what their child has been curious about, where they're struggling, and what conversations are worth having at dinner.
+        </p>
+        <div class="mt-5 bg-slate-50 rounded-xl p-4 text-xs text-slate-500 italic leading-relaxed">
+          "Your 9-year-old asked 3 questions about death this week. <span class="text-amber-600 font-medium not-italic">Here are some age-appropriate ways to start that conversation.</span>"
+        </div>
+      </div>
+
+      <%!-- Feature 3: Filters that grow --%>
+      <div class="bg-white rounded-3xl p-7 shadow-sm border border-sky-100">
+        <div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center mb-5">
+          <svg
+            class="w-6 h-6 text-emerald-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"
+            />
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900">Filters that grow up</h3>
+        <p class="mt-3 text-sm text-slate-500 leading-relaxed">
+          A 5-question setup in under 10 minutes. As your child matures, Kite proactively recommends when to loosen restrictions — based on age and demonstrated readiness.
+        </p>
+        <div class="mt-5 bg-slate-50 rounded-xl p-4 text-xs text-slate-500 italic leading-relaxed">
+          "Emma is asking noticeably more sophisticated questions. <span class="text-emerald-600 font-medium not-italic">She might be ready to explore some topics more openly.</span>"
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%!-- PRIVACY --%>
+<section id="privacy" class="py-20 px-6 lg:px-8 bg-white">
+  <div class="mx-auto max-w-4xl">
+    <div class="bg-slate-900 rounded-3xl p-8 sm:p-12 text-white overflow-hidden relative">
+      <%!-- Background decoration --%>
+      <div class="absolute top-0 right-0 w-64 h-64 bg-sky-500/10 rounded-full -translate-y-1/2 translate-x-1/2">
+      </div>
+      <div class="absolute bottom-0 left-0 w-48 h-48 bg-sky-500/5 rounded-full translate-y-1/2 -translate-x-1/2">
+      </div>
+
+      <div class="relative">
+        <div class="inline-flex items-center gap-2 bg-white/10 text-white/80 text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
+          🇨🇭 Built in Switzerland
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">
+          Your family's data stays private. Full stop.
+        </h2>
+        <p class="mt-4 text-white/60 text-lg max-w-xl">
+          Kite is built to European privacy standards from the ground up. No advertising. No data resale. No model training on children's conversations.
+        </p>
+        <div class="mt-8 grid sm:grid-cols-3 gap-4">
+          <div class="bg-white/5 rounded-2xl p-5">
+            <p class="text-sm font-semibold">🇪🇺 GDPR compliant</p>
+            <p class="text-white/50 text-xs mt-1">
+              Full compliance with EU data protection law and the EU AI Act for systems interacting with minors.
+            </p>
+          </div>
+          <div class="bg-white/5 rounded-2xl p-5">
+            <p class="text-sm font-semibold">🏔 Processed in Switzerland</p>
+            <p class="text-white/50 text-xs mt-1">
+              All family data is stored and processed in Switzerland. Never transferred to the US or sold to third parties.
+            </p>
+          </div>
+          <div class="bg-white/5 rounded-2xl p-5">
+            <p class="text-sm font-semibold">🚫 No ads. Ever.</p>
+            <p class="text-white/50 text-xs mt-1">
+              Kite's business model is a family subscription. Your children are never the product.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%!-- FINAL WAITLIST CTA --%>
+<section id="waitlist" class="py-20 px-6 lg:px-8 bg-sky-50">
+  <div class="mx-auto max-w-xl text-center">
+    <div class="text-4xl mb-4">🪁</div>
+    <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+      Be among the first families.
+    </h2>
+    <p class="mt-4 text-slate-500 text-lg">
+      Kite is in early development. Join the waitlist to get early access and help shape the product.
+    </p>
+    <p class="mt-1 text-slate-400 text-sm">
+      30-day free trial &middot; CHF 12 / €12 / $13 per month after
+    </p>
+
+    <div class="mt-8">
+      <%= if @submitted do %>
+        <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-8 text-center">
+          <p class="text-lg font-bold text-emerald-800">You're on the list!</p>
+          <p class="text-sm text-emerald-600 mt-2">
+            We'll reach out when Kite is ready for your family. In the meantime, share with other parents who'd love this.
+          </p>
+        </div>
+      <% else %>
+        <.form
+          for={@form}
+          id="waitlist-form"
+          phx-submit="submit"
+          phx-change="validate"
+          class="space-y-3"
+        >
+          <.input
+            field={@form[:name]}
+            type="text"
+            placeholder="Your name"
+            class="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent text-sm"
+          />
+          <.input
+            field={@form[:email]}
+            type="email"
+            placeholder="your@email.com"
+            class="w-full px-4 py-3 rounded-xl border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent text-sm"
+          />
+          <button
+            type="submit"
+            class="w-full py-3 bg-sky-500 hover:bg-sky-600 text-white font-semibold rounded-xl transition-colors text-sm phx-submit-loading:opacity-60 phx-submit-loading:cursor-wait"
+          >
+            Join the waitlist
+          </button>
+        </.form>
+        <p class="mt-3 text-xs text-slate-400">No spam. Unsubscribe anytime.</p>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<%!-- FOOTER --%>
+<footer class="py-10 px-6 lg:px-8 bg-white border-t border-slate-100">
+  <div class="mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <svg class="h-6 w-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 2 L28 16 L16 30 L4 16 Z" stroke="#0ea5e9" stroke-width="1.5" fill="none" />
+        <circle cx="16" cy="16" r="2" fill="#0ea5e9" />
+      </svg>
+      <span class="text-sm font-semibold text-slate-700">kite</span>
+      <span class="text-slate-300 text-sm">·</span>
+      <span class="text-xs text-slate-400">Zurich, Switzerland</span>
+    </div>
+    <p class="text-xs text-slate-400">
+      © 2026 Kite &middot;
+      <a href="mailto:press@kite.family" class="hover:text-slate-600 transition-colors">
+        press@kite.family
+      </a>
+    </p>
+  </div>
+</footer>
