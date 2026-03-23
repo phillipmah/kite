@@ -1,90 +1,136 @@
-<div class="flex flex-col h-screen" id="sandbox-page">
-  <%!-- Header --%>
-  <div class="navbar bg-base-200 border-b border-base-300 px-4 sm:px-6 flex-none">
-    <div class="flex-1">
-      <a href="/" class="flex items-center gap-2">
-        <img src={~p"/images/logo.svg"} width="28" />
-        <span class="font-semibold text-sm">Kite</span>
+<Layouts.flash_group flash={@flash} />
+
+<%!-- NAV --%>
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
+  <div class="mx-auto max-w-6xl px-6 lg:px-8 flex h-16 items-center justify-between">
+    <a href="/" class="flex items-center gap-2.5">
+      <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 2 L28 16 L16 30 L4 16 Z" fill="#0ea5e9" opacity="0.15" />
+        <path d="M16 2 L28 16 L16 30 L4 16 Z" stroke="#0ea5e9" stroke-width="1.5" fill="none" />
+        <path d="M16 2 L16 30" stroke="#0ea5e9" stroke-width="1.5" opacity="0.4" />
+        <path d="M4 16 L28 16" stroke="#0ea5e9" stroke-width="1.5" opacity="0.4" />
+        <circle cx="16" cy="16" r="2.5" fill="#0ea5e9" />
+        <path d="M16 30 Q18 33 16 36" stroke="#94a3b8" stroke-width="1" stroke-linecap="round" />
+      </svg>
+      <span class="text-lg font-bold text-slate-900 tracking-tight">kite</span>
+    </a>
+    <div class="flex items-center gap-4">
+      <span class="hidden sm:block text-xs font-semibold text-sky-600 bg-sky-100 px-3 py-1 rounded-full tracking-wide uppercase">
+        Model Sandbox
+      </span>
+      <a
+        href="/"
+        class="text-sm font-medium bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-full transition-colors"
+      >
+        Join waitlist
       </a>
     </div>
-    <div class="flex-none gap-2">
-      <a href="/sandbox" class="btn btn-ghost btn-sm">Sandbox</a>
-      <a href="/" class="btn btn-primary btn-sm">Get Early Access</a>
-    </div>
   </div>
+</nav>
 
-  <%!-- Page title --%>
-  <div class="bg-base-100 border-b border-base-300 px-4 sm:px-6 py-3 flex-none">
-    <h1 class="text-lg font-bold">Model Sandbox</h1>
-    <p class="text-sm text-base-content/60">
-      Test how AI models respond to your child's questions
-    </p>
-  </div>
-
-  <%!-- Controls row --%>
-  <div class="bg-base-100 border-b border-base-300 px-4 sm:px-6 py-3 flex-none">
-    <div class="flex flex-wrap gap-3 items-start">
+<%!-- Full-height layout sitting below the fixed nav --%>
+<div class="flex flex-col h-screen pt-16" id="sandbox-page">
+  <%!-- Controls strip --%>
+  <div class="bg-white border-b border-slate-100 px-4 sm:px-6 py-3 flex-none">
+    <div class="flex flex-wrap gap-4 items-end">
       <%!-- Model selector --%>
       <div class="flex flex-col gap-1">
-        <label class="text-xs font-medium text-base-content/60">Model</label>
-        <select
-          name="model"
-          class="select select-bordered select-sm w-36"
-          phx-change="update_model"
-        >
-          <%= for model <- Kite.Sandbox.Models.all() do %>
-            <option value={model.id} selected={model.id == @model}>{model.name}</option>
-          <% end %>
-        </select>
+        <label class="text-xs font-medium text-slate-500">Model</label>
+        <div class="relative">
+          <select
+            name="model"
+            class="appearance-none bg-white border border-slate-200 rounded-xl text-sm text-slate-700 pl-3 pr-8 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent cursor-pointer w-36"
+            phx-change="update_model"
+          >
+            <%= for model <- Kite.Sandbox.Models.all() do %>
+              <option value={model.id} selected={model.id == @model}>{model.name}</option>
+            <% end %>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-400">
+            <svg
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
       </div>
 
-      <%!-- Child's age selector --%>
+      <%!-- Child's age --%>
       <div class="flex flex-col gap-1">
-        <label class="text-xs font-medium text-base-content/60">Child's Age</label>
-        <select
-          name="child_age"
-          class="select select-bordered select-sm w-36"
-          phx-change="update_child_age"
-        >
-          <%= for {value, label} <- [{"5", "5 years old"}, {"7", "7 years old"}, {"10", "10 years old"}, {"12", "12 years old"}, {"teenager", "Teenager"}] do %>
-            <option value={value} selected={value == @child_age}>{label}</option>
-          <% end %>
-        </select>
+        <label class="text-xs font-medium text-slate-500">Child's age</label>
+        <div class="relative">
+          <select
+            name="child_age"
+            class="appearance-none bg-white border border-slate-200 rounded-xl text-sm text-slate-700 pl-3 pr-8 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent cursor-pointer w-36"
+            phx-change="update_child_age"
+          >
+            <%= for {value, label} <- [{"5", "5 years old"}, {"7", "7 years old"}, {"10", "10 years old"}, {"12", "12 years old"}, {"teenager", "Teenager"}] do %>
+              <option value={value} selected={value == @child_age}>{label}</option>
+            <% end %>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-400">
+            <svg
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
       </div>
 
-      <%!-- Family context selector --%>
+      <%!-- Family context --%>
       <div class="flex flex-col gap-1">
-        <label class="text-xs font-medium text-base-content/60">Family Context</label>
-        <select
-          name="family_context"
-          class="select select-bordered select-sm w-52"
-          phx-change="update_family_context"
-        >
-          <%= for {value, label} <- [
-            {"none", "None"},
-            {"conservative_religious", "Conservative religious"},
-            {"secular", "Secular"},
-            {"single_parent", "Single parent"},
-            {"multilingual", "Multilingual"},
-            {"custom", "Custom..."}
-          ] do %>
-            <option value={value} selected={value == @family_context}>{label}</option>
-          <% end %>
-        </select>
+        <label class="text-xs font-medium text-slate-500">Family context</label>
+        <div class="relative">
+          <select
+            name="family_context"
+            class="appearance-none bg-white border border-slate-200 rounded-xl text-sm text-slate-700 pl-3 pr-8 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent cursor-pointer w-52"
+            phx-change="update_family_context"
+          >
+            <%= for {value, label} <- [
+              {"none", "None"},
+              {"conservative_religious", "Conservative religious"},
+              {"secular", "Secular"},
+              {"single_parent", "Single parent"},
+              {"multilingual", "Multilingual"},
+              {"custom", "Custom..."}
+            ] do %>
+              <option value={value} selected={value == @family_context}>{label}</option>
+            <% end %>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-400">
+            <svg
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
       </div>
 
       <%!-- Custom context input --%>
       <%= if @family_context == "custom" do %>
-        <div class="flex flex-col gap-1 flex-1 min-w-48">
-          <label class="text-xs font-medium text-base-content/60">
-            Describe the family context
-          </label>
+        <div class="flex flex-col gap-1 flex-1 min-w-52">
+          <label class="text-xs font-medium text-slate-500">Describe the family context</label>
           <input
             type="text"
             name="custom_context"
             value={@custom_context}
             placeholder="e.g. Family observes Shabbat, child attends Jewish day school"
-            class="input input-bordered input-sm w-full"
+            class="w-full border border-slate-200 rounded-xl text-sm text-slate-700 px-3 py-2 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent"
             phx-change="update_custom_context"
             phx-debounce="500"
           />
@@ -93,46 +139,58 @@
     </div>
   </div>
 
-  <%!-- Context summary bar --%>
-  <div class="bg-base-200 border-b border-base-300 px-4 sm:px-6 py-2 flex-none">
-    <span class="text-xs text-base-content/60 font-medium">
+  <%!-- Context summary strip --%>
+  <div class="bg-sky-50 border-b border-sky-100 px-4 sm:px-6 py-2 flex-none">
+    <span class="text-xs text-sky-700 font-medium">
       {context_summary(@model, @child_age)}
       <%= if @family_context != "none" do %>
-        <span class="mx-1">·</span>
+        <span class="mx-1.5 text-sky-300">·</span>
         <span>{family_label(@family_context)}</span>
       <% end %>
     </span>
   </div>
 
-  <%!-- Daily limit reached banner --%>
+  <%!-- Daily limit banner --%>
   <%= if @daily_limit_reached do %>
-    <div class="alert alert-warning rounded-none border-x-0 flex-none">
-      <.icon name="hero-clock" class="size-4" />
-      <span>Daily limit reached. Come back tomorrow!</span>
+    <div class="bg-amber-50 border-b border-amber-100 px-4 sm:px-6 py-3 flex items-center gap-2 flex-none">
+      <svg
+        class="w-4 h-4 text-amber-500 flex-shrink-0"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <span class="text-sm text-amber-700 font-medium">
+        Daily limit reached — come back tomorrow.
+      </span>
     </div>
   <% end %>
 
   <%!-- Chat thread --%>
   <div
     id="chat-messages"
-    class="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4"
+    class="flex-1 overflow-y-auto px-4 sm:px-6 py-6 space-y-5"
     phx-hook="ScrollToBottom"
   >
     <%= for {message, i} <- Enum.with_index(@messages) do %>
       <%= if message.role == "user" do %>
-        <div class="chat chat-end">
-          <div class="chat-bubble chat-bubble-primary max-w-sm sm:max-w-md">
+        <div class="flex justify-end">
+          <div class="max-w-sm sm:max-w-md bg-sky-500 text-white text-sm rounded-2xl rounded-br-sm px-4 py-3 leading-relaxed">
             {message.content}
           </div>
         </div>
       <% else %>
-        <div class="chat chat-start" id={"msg-#{i}"}>
-          <div class="chat-header mb-1 flex items-center gap-2">
-            <span class="badge badge-ghost badge-sm text-xs">
-              {Kite.Sandbox.Models.name(message.model || @model)}
-            </span>
-          </div>
-          <div class="chat-bubble chat-bubble-neutral max-w-sm sm:max-w-lg whitespace-pre-wrap">
+        <div class="flex flex-col items-start gap-1.5" id={"msg-#{i}"}>
+          <span class="text-xs font-medium text-sky-600 bg-sky-100 px-2.5 py-0.5 rounded-full">
+            {Kite.Sandbox.Models.name(message.model || @model)}
+          </span>
+          <div class="max-w-sm sm:max-w-lg bg-slate-100 text-slate-800 text-sm rounded-2xl rounded-bl-sm px-4 py-3 leading-relaxed whitespace-pre-wrap">
             {message.content}
           </div>
         </div>
@@ -141,56 +199,73 @@
 
     <%!-- Loading indicator --%>
     <%= if @loading do %>
-      <div class="chat chat-start">
-        <div class="chat-header mb-1">
-          <span class="badge badge-ghost badge-sm text-xs">
-            {Kite.Sandbox.Models.name(@model)}
-          </span>
-        </div>
-        <div class="chat-bubble chat-bubble-neutral">
-          <span class="loading loading-dots loading-sm"></span>
+      <div class="flex flex-col items-start gap-1.5">
+        <span class="text-xs font-medium text-sky-600 bg-sky-100 px-2.5 py-0.5 rounded-full">
+          {Kite.Sandbox.Models.name(@model)}
+        </span>
+        <div class="bg-slate-100 rounded-2xl rounded-bl-sm px-4 py-3.5">
+          <div class="flex gap-1.5 items-center">
+            <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce [animation-delay:-0.3s]">
+            </span>
+            <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce [animation-delay:-0.15s]">
+            </span>
+            <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></span>
+          </div>
         </div>
       </div>
     <% end %>
   </div>
 
   <%!-- Input area --%>
-  <div class="bg-base-100 border-t border-base-300 px-4 sm:px-6 py-3 flex-none">
-    <form phx-submit="send_message" class="flex gap-2 items-end">
+  <div class="bg-white border-t border-slate-100 px-4 sm:px-6 py-4 flex-none">
+    <form phx-submit="send_message" class="flex gap-3 items-end">
       <div class="flex-1">
         <textarea
           name="message"
           placeholder="Type a message..."
-          class="textarea textarea-bordered w-full resize-none"
+          class="w-full border border-slate-200 rounded-2xl text-sm text-slate-900 placeholder-slate-400 px-4 py-3 resize-none focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent leading-relaxed"
           rows="1"
           disabled={@loading || @daily_limit_reached || @messages_remaining <= 0}
           phx-key="Enter"
           id="message-input"
         >{@message_input}</textarea>
       </div>
-      <div class="flex flex-col items-end gap-1">
+      <div class="flex flex-col items-end gap-1.5 flex-shrink-0">
         <button
           type="submit"
-          class="btn btn-primary btn-sm"
+          class="bg-sky-500 hover:bg-sky-600 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-3 rounded-full transition-colors"
           disabled={@loading || @daily_limit_reached || @messages_remaining <= 0}
         >
           <%= if @loading do %>
-            <span class="loading loading-spinner loading-xs"></span>
+            <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              >
+              </circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              >
+              </path>
+            </svg>
           <% else %>
             Send
           <% end %>
         </button>
         <span class={[
           "text-xs",
-          if(@messages_remaining <= 1,
-            do: "text-warning font-medium",
-            else: "text-base-content/50"
-          )
+          if(@messages_remaining <= 1, do: "text-amber-500 font-medium", else: "text-slate-400")
         ]}>
           <%= if @messages_remaining > 0 do %>
-            {@messages_remaining} {if @messages_remaining == 1, do: "message", else: "messages"} remaining
+            {@messages_remaining} {if @messages_remaining == 1, do: "message", else: "messages"} left
           <% else %>
-            No messages remaining
+            No messages left
           <% end %>
         </span>
       </div>
@@ -200,29 +275,50 @@
 
 <%!-- Waitlist gate modal --%>
 <%= if @show_waitlist_gate do %>
-  <div class="modal modal-open">
-    <div class="modal-box max-w-md">
+  <div class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center px-4">
+    <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-xl relative">
       <%= if @waitlist_submitted do %>
-        <div class="text-center py-4">
-          <div class="text-4xl mb-4">🎉</div>
-          <h3 class="text-xl font-bold mb-2">You're on the list!</h3>
-          <p class="text-base-content/70 mb-6">
-            We'll be in touch when Kite is ready. In the meantime, you can still view the conversation above.
+        <div class="text-center py-2">
+          <div class="text-4xl mb-4">🪁</div>
+          <h3 class="text-xl font-bold text-slate-900 tracking-tight mb-2">
+            You're on the list!
+          </h3>
+          <p class="text-sm text-slate-500 mb-6">
+            We'll be in touch when Kite is ready. You can still read the conversation above.
           </p>
-          <button class="btn btn-ghost btn-sm" phx-click="dismiss_waitlist">
+          <button
+            class="text-sm text-slate-400 hover:text-slate-600 transition-colors"
+            phx-click="dismiss_waitlist"
+          >
             Close
           </button>
         </div>
       <% else %>
         <button
-          class="btn btn-ghost btn-sm btn-circle absolute right-2 top-2"
+          class="absolute right-5 top-5 text-slate-300 hover:text-slate-500 transition-colors"
           phx-click="dismiss_waitlist"
+          aria-label="Close"
         >
-          ✕
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
-        <h3 class="text-xl font-bold mb-1">You've used your 5 free messages</h3>
-        <p class="text-base-content/70 mb-6">
-          Join the waitlist to get early access and unlimited conversations.
+
+        <div class="inline-flex items-center gap-2 bg-sky-100 text-sky-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-5 tracking-wide uppercase">
+          <span class="w-1.5 h-1.5 bg-sky-500 rounded-full"></span> 5 free messages used
+        </div>
+
+        <h3 class="text-2xl font-bold text-slate-900 tracking-tight mb-2">
+          Join the waitlist for more
+        </h3>
+        <p class="text-sm text-slate-500 mb-6">
+          Get early access and unlimited conversations when Kite launches.
         </p>
 
         <form phx-submit="submit_waitlist" class="space-y-3">
@@ -232,25 +328,26 @@
               name="email"
               value={@waitlist_email}
               placeholder="your@email.com"
-              class={["input input-bordered w-full", if(@waitlist_error, do: "input-error")]}
+              class={[
+                "w-full border rounded-xl text-sm text-slate-900 placeholder-slate-400 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent",
+                if(@waitlist_error, do: "border-rose-300", else: "border-slate-200")
+              ]}
               required
               autofocus
             />
             <%= if @waitlist_error do %>
-              <p class="text-error text-sm mt-1">{@waitlist_error}</p>
+              <p class="text-xs text-rose-500 mt-1.5">{@waitlist_error}</p>
             <% end %>
           </div>
-          <button type="submit" class="btn btn-primary w-full">
-            Join the Waitlist
+          <button
+            type="submit"
+            class="w-full py-3 bg-sky-500 hover:bg-sky-600 text-white text-sm font-semibold rounded-full transition-colors"
+          >
+            Join the waitlist
           </button>
         </form>
-        <p class="text-xs text-base-content/40 mt-3 text-center">
-          No spam. We'll only email you when we're ready.
-        </p>
+        <p class="text-xs text-slate-400 mt-3 text-center">No spam. Unsubscribe anytime.</p>
       <% end %>
     </div>
-    <form method="dialog" class="modal-backdrop">
-      <button phx-click="dismiss_waitlist">close</button>
-    </form>
   </div>
 <% end %>
